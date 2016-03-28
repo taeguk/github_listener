@@ -1,28 +1,11 @@
 #-*- coding: utf-8 -*-
 
-from .github_listener import GithubAccount
-from .parser.notification_parser import NotificationParser
-
-class Notification(object):
-    def __init__(self, title, link, persons):
-        self.title = title
-        self.link = link
-        self.persons = persons
-        self.hash_val = self.__hash__()#hashlib.sha512(title + link + persons).hexdigest()
-
-    def __eq__(self, notification):
-        return self.hash_val == notification.hash_val
-
-    def __hash__(self):
-        return hash(self.title + self.link + self.persons)
-
-class NotificationGroup(object):
-    def __init__(self, group_name):
-        self.group_name = group_name
-        self.notifications = []
-
-    def add_notification(self, notification):
-        self.notifications.append(notification)
+from .parser.github import GithubAccount
+from .parser.notification_parser import (
+    Notification,
+    NotificationGroup,
+    NotificationParser,
+)
 
 class NotificationChange(object):
     def __init__(self):

@@ -1,17 +1,16 @@
 #-*- coding: utf-8 -*-
 
-from .notification import *
+from .parser.github import GithubAccount
+from .notification import (
+    NotificationChange,
+    NotificationChecker,
+)
 
 def enum(*sequential, **named):
     enums = dict(zip(sequential, range(len(sequential))), **named)
     return type('Enum', (), enums)
 
 GithubEvents = enum("notification")
-
-class GithubAccount:
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
 
 class HandlerManager(object):
     def __init__(self):

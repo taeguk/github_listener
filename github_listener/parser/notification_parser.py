@@ -2,8 +2,28 @@
 
 import requests
 from bs4 import BeautifulSoup
-from ..github_listener import GithubAccount
-from ..notification import NotificationGroup
+from .github import GithubAccount
+
+class Notification(object):
+    def __init__(self, title, link, persons):
+        self.title = title
+        self.link = link
+        self.persons = persons
+        self.hash_val = self.__hash__()
+
+    def __eq__(self, notification):
+        return self.hash_val == notification.hash_val
+
+    def __hash__(self):
+        return hash(self.title + self.link + self.persons)
+
+class NotificationGroup(object):
+    def __init__(self, group_name):
+        self.group_name = group_name
+        self.notifications = []
+
+    def add_notification(self, notification):
+        self.notifications.append(notification)
 
 class NotificationParser(object):
     def __init__(self, account):
@@ -56,6 +76,4 @@ class NotificationParser(object):
                 notification_group.add_notification(Notification(n_title, n_link, n_persons))
 
         return notification_groups
-
-
 
