@@ -63,3 +63,4 @@ target/
 
 ##### added #####
 *.bak
+secret_dir/
