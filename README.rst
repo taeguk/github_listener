@@ -19,8 +19,10 @@ You can install Github Listener using pip :
 
     $ pip install github_listener
 
+
 Feature Support
 --------------------
+
 - Notification
 - ...If you have things you want, please tell me through issues_.
 
@@ -29,6 +31,7 @@ Feature Support
 
 Example
 ---------------
+
 .. code-block:: python
 
     from github_listener import (
@@ -45,6 +48,7 @@ Example
       pass
     
     listener.run()  # infinite loop
+
 
 .. code-block:: python
 
