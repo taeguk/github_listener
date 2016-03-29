@@ -11,8 +11,8 @@ account = GithubAccount("username", "password")
 listener = GithubListener(account)
 
 @listener.notification
-def on_change(change):
-    print("[*] on_change()")
+def on_notification(change):
+    print("[*] notification occurs!")
     for group in change.n_groups:
         print("-- {0} --".format(group.group_name))
         idx = 1
@@ -21,5 +21,5 @@ def on_change(change):
             idx += 1
 
 print("- start -")
-listener.run()
+listener.run()  # infinite loop
 print("- end -")
