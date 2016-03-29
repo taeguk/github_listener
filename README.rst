@@ -11,7 +11,7 @@ The simple library that calls user's registered functions whenever github events
 
 
 How to install
-------------
+-----------------
 
 You can install Github Listener using pip :
 
@@ -20,7 +20,7 @@ You can install Github Listener using pip :
     $ pip install github_listener
 
 Feature Support
----------------
+--------------------
 - Notification
 - ...If you have things you want, please tell me through issues_.
 
@@ -63,5 +63,5 @@ For more detail examples, Go Examples_.
 
 
 Contribution
----------------
+-----------------
 Welcome any kind of contribution!
