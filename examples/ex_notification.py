@@ -22,4 +22,5 @@ def on_notification(change):
 
 print("- start -")
 listener.run()  # infinite loop
+# listener.run(5)   # listener sleep 5 seconds whenever processing is finished.
 print("- end -")

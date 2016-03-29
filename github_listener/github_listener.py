@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+import time
 from .parser.github import GithubAccount
 from .notification import (
     NotificationChange,
@@ -54,7 +55,7 @@ class GithubListener(object):
         self.handler_manager.notification_handler = handler
         return callback
 
-    def check_event_occurrence(self, timeout = 1000):
+    def check_event_occurrence(self):
         events = self.event_checker.check_all_events()
         return events
 
@@ -62,10 +63,11 @@ class GithubListener(object):
         for event in events:
             self.handler_manager.do_handler(event, self.event_checker.get_change(event))
 
-    def run(self):
+    def run(self, sleep_sec = 0.5):
         while True:
             events = self.check_event_occurrence()
             self.process_events(events)
+            time.sleep(sleep_sec)
 
 
 if __name__ == "__main__":
