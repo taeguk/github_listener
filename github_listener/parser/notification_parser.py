@@ -61,7 +61,9 @@ class NotificationParser(object):
             raise Exception("Loading Error")
 
         soup = BeautifulSoup(r.text, 'html.parser')
-        target_area = soup.find_all(class_="notifications-list")[0]
+        target_area = soup.find(class_="notifications-list")
+        if target_area is None:
+            return []
 
         raw_group_list = target_area.find_all(class_="js-notifications-browser", recursive=False)
         for raw_group in raw_group_list:
@@ -72,7 +74,7 @@ class NotificationParser(object):
             for raw_n in raw_n_list:
                 n_title = raw_n.span.a.get_text().strip()
                 n_link = raw_n.span.a.get('href').strip()
-                n_persons = raw_n.ul.find_all(class_='tooltipped', recursive=False)[0].get('aria-label').strip()
+                n_persons = raw_n.ul.find(class_='tooltipped', recursive=False).get('aria-label').strip()
                 notification_group.add_notification(Notification(n_title, n_link, n_persons))
 
         return notification_groups
