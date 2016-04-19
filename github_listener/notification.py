@@ -1,15 +1,15 @@
 #-*- coding: utf-8 -*-
 
-from .parser.github import GithubAccount
-from .parser.notification_parser import (
+from .github_api.github_api import GithubAccount
+from .github_api.notification_api import (
     Notification,
     NotificationGroup,
-    NotificationParser,
+    NotificationAPI,
 )
 
 class NotificationChange(object):
-    def __init__(self):
-        self.n_groups = []
+    def __init__(self, n_groups = []):
+        self.n_groups = n_groups
 
     def add_change(self, group, n = None):
         if n is None:
@@ -32,53 +32,15 @@ class NotificationChange(object):
 class NotificationChecker(object):
     def __init__(self, account):
         self.account = account
-        self.prev_notification_groups = None
-        self.change_notification = None
+        self.notification_api = NotificationAPI(account)
+        self.notification_change = None
 
     def check_notification(self):
-        parser = NotificationParser(self.account)
-        cur_groups = parser.parse()
+        n_groups = self.notification_api.get_notification_groups(only_change = True)
 
-        if self.prev_notification_groups is None:
-            self.prev_notification_groups = cur_groups
-            return False
+        if self.notification_change is None:
+            self.notification_change = NotificationChange()
+        else:
+            self.notification_change = NotificationChange(n_groups)
 
-        prev_groups = sorted(self.prev_notification_groups, key=lambda x: x.group_name)
-        self.prev_notification_groups = cur_groups
-        cur_groups.sort(key=lambda x: x.group_name)
-        prev_group_idx = cur_group_idx = 0
-        prev_group_cnt = len(prev_groups)
-        cur_group_cnt = len(cur_groups)
-
-        self.change_notification = NotificationChange()
-        while prev_group_idx < prev_group_cnt and cur_group_idx < cur_group_cnt:
-            prev_group = prev_groups[prev_group_idx]
-            cur_group = cur_groups[cur_group_idx]
-
-            if prev_group.group_name < cur_group.group_name:
-                prev_group_idx += 1
-            elif prev_group.group_name > cur_group.group_name:
-                self.change_notification.add_change(cur_group)
-                cur_group_idx += 1
-            else:
-                prev_set = set(prev_group.notifications)
-                cur_set = set(cur_group.notifications)
-                change_set = cur_set - prev_set
-                for n in change_set:
-                    self.change_notification.add_change(cur_group, n)
-                prev_group_idx += 1
-                cur_group_idx += 1
-                
-        while cur_group_idx < cur_group_cnt:
-            self.change_notification.add_change(cur_groups[cur_group_idx])
-            cur_group_idx += 1
-        
-
-        return self.change_notification.is_changed()
-
-    def notification_groups_to_notifications(self, n_groups):
-        n_list = []
-        for n_group in n_groups:
-            n_list.append(n_group.notifications)
-        return n_list
-
+        return self.notification_change.is_changed()

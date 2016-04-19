@@ -11,7 +11,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup (
     name = 'github_listener',
-    version = '0.0.4',
+    version = '0.1.0',
 
     author = 'taeguk',
     author_email = 'xornrbboy@gmail.com',
@@ -24,7 +24,7 @@ setup (
     packages=find_packages(),
     include_package_data = True,
 
-    install_requires = ['requests', 'beautifulsoup4'],
+    install_requires = ['requests'],
     
     keywords = 'github notification',
 )

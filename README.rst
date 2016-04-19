@@ -53,11 +53,11 @@ Example
 .. code-block:: python
 
     from github_listener import GithubAccount
-    from github_listener.parser import NotificationParser
-    
+    from github_listener.github_api import NotificationAPI
+
     account = GithubAccount("username", "password")
-    parser = NotificationParser(account)
-    groups = parser.parse()
+    api = NotificationAPI(account)
+    groups = api.get_notification_groups()
     
     # Do something using notification informations.
 
