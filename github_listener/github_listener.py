@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 import time
-from .parser.github import GithubAccount
+from .github_api.github_api import GithubAccount
 from .notification import (
     NotificationChange,
     NotificationChecker,
@@ -33,7 +33,7 @@ class GithubEventChecker(object):
 
     def get_change(self, event):
         if event == GithubEvents.notification:
-            return self.notification_checker.change_notification
+            return self.notification_checker.notification_change
         else:
             raise Exception("Unknown github event.")
 
@@ -68,7 +68,6 @@ class GithubListener(object):
             events = self.check_event_occurrence()
             self.process_events(events)
             time.sleep(sleep_sec)
-
 
 if __name__ == "__main__":
     pass

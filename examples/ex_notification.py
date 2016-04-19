@@ -17,7 +17,7 @@ def on_notification(change):
         print("-- {0} --".format(group.group_name))
         idx = 1
         for n in group.notifications:
-            print("#{0}\nTitle : {1}\nLink : {2}\nPersons : {3}".format(idx, n.title, n.link, n.persons))
+            print("#{0}\nTitle : {1}\nLink : {2}\nPerson : {3}\nText : {4}".format(idx, n.title, n.link, n.person, n.text))
             idx += 1
 
 print("- start -")
