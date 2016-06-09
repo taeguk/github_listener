@@ -50,7 +50,7 @@ class NotificationAPI(GithubAPI):
         if r.status_code == 304: # Not Modified
             return []
         if only_change:
-            self.last_modified_date = r.headers['Last-Modified']
+            self.last_modified_date = r.headers.get('Last-Modified')
 
         n_groups = []
         json_data_list = r.json()
